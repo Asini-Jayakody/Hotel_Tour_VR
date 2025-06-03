@@ -1,3 +1,5 @@
+import {sendMessageToAvatar } from './chat.js';
+
 // Basic scene setup
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
@@ -122,6 +124,10 @@ window.addEventListener('mousemove', (event) => {
 });
 
 
+
+// const message = document.getElementById('sendBtn').addEventListener('click', sendMessageToAvatar);
+document.getElementById('sendBtn').addEventListener('click', sendMessageToAvatar);
+
 function playTalkingAnimation() {
   action.reset().fadeIn(0.5).play();
 }
@@ -129,6 +135,8 @@ function playTalkingAnimation() {
 function stopTalkingAnimation() {
   action.stop();
 }
+
+
 
 // Animate
 function animate() {
