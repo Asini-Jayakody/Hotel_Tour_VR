@@ -1,4 +1,4 @@
-import {sendMessageToAvatar } from './chat_rag.js';
+import {sendMessageToAvatar, submitAudio } from './chat_rag.js';
 
 // Basic scene setup
 const scene = new THREE.Scene();
@@ -133,8 +133,52 @@ window.addEventListener('sceneChanged', function(e) {
 
 
 
-
 const message = document.getElementById('sendBtn').addEventListener('click', sendMessageToAvatar);
+
+document.getElementById('recordBtnId').addEventListener('click', submitAudio('recordBtnId','stopBtnId'))
+document.getElementById('stopBtnId').addEventListener('click', submitAudio('recordBtnId','stopBtnId'))
+
+
+
+function playTalkingAnimation() {
+  action.reset().fadeIn(0.5).play();
+}
+
+function stopTalkingAnimation() {
+  action.stop();
+}
+
+
+
+// Animate
+function animate() {
+  requestAnimationFrame(animate);
+  
+  const delta = clock.getDelta();
+  if (mixer) mixer.update(delta); // ✅ update animation
+  
+  // ✅ Play talking animation only once
+  if (!isTalking && avatar) {
+    playTalkingAnimation();
+    isTalking = true;
+    talkStartTime = clock.elapsedTime;
+    console.log("play talking animation");
+  }
+  
+  // ✅ Stop after 10 seconds
+  if (isTalking && clock.elapsedTime - talkStartTime > talkDuration) {
+    stopTalkingAnimation();
+    isTalking = false;
+    console.log("stop talking animation");
+  }
+  
+  
+  renderer.render(scene, camera);
+}
+animate();
+
+
+
 // document.getElementById('sendBtn').addEventListener('click', sendMessageToAvatar);
 // document.getElementById('sendBtn').addEventListener('click', testBackend);
 
@@ -154,50 +198,6 @@ const message = document.getElementById('sendBtn').addEventListener('click', sen
 //   console.log("Playing audio from backend response:", audioUrl);
 //   await audio.play();
 // }
-
-
-
-
-
-function playTalkingAnimation() {
-  action.reset().fadeIn(0.5).play();
-}
-
-function stopTalkingAnimation() {
-  action.stop();
-}
-
-
-
-// Animate
-function animate() {
-    requestAnimationFrame(animate);
-
-    const delta = clock.getDelta();
-    if (mixer) mixer.update(delta); // ✅ update animation
-
-    // ✅ Play talking animation only once
-    if (!isTalking && avatar) {
-        playTalkingAnimation();
-        isTalking = true;
-        talkStartTime = clock.elapsedTime;
-        console.log("play talking animation");
-    }
-
-    // ✅ Stop after 10 seconds
-    if (isTalking && clock.elapsedTime - talkStartTime > talkDuration) {
-        stopTalkingAnimation();
-        isTalking = false;
-        console.log("stop talking animation");
-    }
-
-
-    renderer.render(scene, camera);
-}
-animate();
-
-
-
 
 
 // // Set up the scene
