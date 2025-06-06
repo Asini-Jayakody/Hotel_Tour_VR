@@ -1,8 +1,8 @@
 var APP_DATA = {
   "scenes": [
     {
-      "id": "0-shot-panoramic-composition-living-room-1",
-      "name": "shot-panoramic-composition-living-room (1)",
+      "id": "room1",
+      "name": "room1",
       "levels": [
         {
           "tileSize": 256,
@@ -33,14 +33,15 @@ var APP_DATA = {
           "yaw": 2.507082116005206,
           "pitch": 0.002544261007862758,
           "rotation": 0.7853981633974483,
-          "target": "1-untitled-design"
+          "target": "room2"
         }
       ],
-      "infoHotspots": []
+      "infoHotspots": [],
+      "audio": "auido/welcome_message.wav"
     },
     {
-      "id": "1-untitled-design",
-      "name": "Untitled design",
+      "id": "room2",
+      "name": "room2",
       "levels": [
         {
           "tileSize": 256,
@@ -59,7 +60,8 @@ var APP_DATA = {
         "fov": 1.5707963267948966
       },
       "linkHotspots": [],
-      "infoHotspots": []
+      "infoHotspots": [],
+      "audio": "auido/Palmera_Function_Room.wav"
     }
   ],
   "name": "Project Title",

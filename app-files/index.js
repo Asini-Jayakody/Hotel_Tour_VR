@@ -190,6 +190,27 @@
     startAutorotate();
     updateSceneName(scene);
     updateSceneList(scene);
+
+    var audioElement = document.getElementById('sceneAudio');
+    if (scene.data.audio) {
+      console.log('Playing audio for scene:', scene.data.name);
+      audioElement.src = scene.data.audio;
+      console.log('Audio source set to:', audioElement.src);
+      audioElement.play().catch(function(err) {
+        console.warn('Audio playback failed:', err);
+      });
+    } else {
+      audioElement.pause();
+      audioElement.currentTime = 0;
+    }
+
+    const event = new CustomEvent('sceneChanged', {
+      detail: {
+        id: scene.data.id,
+        name: scene.data.name
+      }
+    });
+    window.dispatchEvent(event);
   }
 
   function updateSceneName(scene) {

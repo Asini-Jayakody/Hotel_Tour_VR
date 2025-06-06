@@ -1,4 +1,4 @@
-import {sendMessageToAvatar } from './chat.js';
+import {sendMessageToAvatar } from './chat_rag.js';
 
 // Basic scene setup
 const scene = new THREE.Scene();
@@ -124,9 +124,40 @@ window.addEventListener('mousemove', (event) => {
 });
 
 
+window.addEventListener('sceneChanged', function(e) {
+  const sceneId = e.detail.id;
+  const sceneName = e.detail.name;
 
-// const message = document.getElementById('sendBtn').addEventListener('click', sendMessageToAvatar);
-document.getElementById('sendBtn').addEventListener('click', sendMessageToAvatar);
+  console.log(`Scene changed to: ${sceneName} (ID: ${sceneId})`);
+});
+
+
+
+
+const message = document.getElementById('sendBtn').addEventListener('click', sendMessageToAvatar);
+// document.getElementById('sendBtn').addEventListener('click', sendMessageToAvatar);
+// document.getElementById('sendBtn').addEventListener('click', testBackend);
+
+
+
+// async function testBackend() {
+//   const response = await fetch("http://localhost:8000/avatar", {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify({ question: "What is the hotel name?" }),
+//   });
+
+//   const blob = await response.blob();
+//   console.log("Response from backend:");
+//   const audioUrl = URL.createObjectURL(blob);
+//   const audio = new Audio(audioUrl);
+//   console.log("Playing audio from backend response:", audioUrl);
+//   await audio.play();
+// }
+
+
+
+
 
 function playTalkingAnimation() {
   action.reset().fadeIn(0.5).play();
