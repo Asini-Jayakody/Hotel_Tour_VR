@@ -1,6 +1,6 @@
 // const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
-const GEMINI_API_KEY = "AIzaSyCCVl-8WiHWwX6IoQL9zSJZFcn7oMLtFVQ"
+const GEMINI_API_KEY = "api-key"
 if (!GEMINI_API_KEY) {
     throw new Error("GEMINI_API_KEY is not set. Please set it in your environment variables.");
 }
