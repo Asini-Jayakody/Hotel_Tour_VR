@@ -32,12 +32,34 @@ export async function talkToAvatar(inputBlob) {
             body: inputBlob,
         });
 
-        const blob = await response.blob();
-        console.log("Response from backend:");
-        const audioUrl = URL.createObjectURL(blob);
+        const data = await response.json();
+        console.log("Response from backend for audio:", data.text_response);
+        // showAvatarMessage(data.text_response);
+        const fullText = data.text_response;
+
+        const audioBinary = atob(data.audio_response);
+        const byteArray = new Uint8Array(audioBinary.length);
+        for (let i = 0; i < audioBinary.length; i++) {
+            byteArray[i] = audioBinary.charCodeAt(i);
+        }
+
+        const audioBlob = new Blob([byteArray], { type: "audio/wav" });
+        const audioUrl = URL.createObjectURL(audioBlob);
         const audio = new Audio(audioUrl);
-        console.log("Playing audio from backend response:", audioUrl);
-        await audio.play();
+        // await audio.play();
+
+        // Wait for audio metadata to get duration
+        audio.onloadedmetadata = () => {
+            const duration = audio.duration; // in seconds
+            playAvatarTextAndAudio(fullText, audio, duration);
+        };
+
+        // const blob = await response.blob();
+        // console.log("Response from backend:");
+        // const audioUrl = URL.createObjectURL(blob);
+        // const audio = new Audio(audioUrl);
+        // console.log("Playing audio from backend response:", audioUrl);
+        // await audio.play();
 
     } catch (error) {
         console.error("Error sending audio to avatar:", error);
@@ -122,6 +144,55 @@ export function submitAudio(recordBtnId, stopBtnId){
             });
         }
 }
+
+
+
+function playAvatarTextAndAudio(fullText, audio, duration) {
+    const dialogueBox = document.getElementById("avatar-dialogue");
+    const dialogueText = document.getElementById("avatar-dialogue-text");
+
+    dialogueBox.style.display = "block";
+    dialogueText.textContent = "";
+
+    const totalChars = fullText.length;
+    const interval = (duration * 1000) / totalChars; // ms per character
+
+    let currentChar = 0;
+
+    const typingInterval = setInterval(() => {
+        if (currentChar < totalChars) {
+            dialogueText.textContent += fullText[currentChar++];
+        } else {
+            clearInterval(typingInterval);
+        }
+    }, interval);
+
+    audio.play();
+
+    // // Hide message after audio ends
+    // audio.onended = () => {
+    //     dialogueBox.style.display = "none";
+    // };
+
+    setTimeout(() => {
+        dialogueBox.style.display = "none";
+    }, 10000);
+}
+
+
+
+// function showAvatarMessage(text) {
+//     const dialogueBox = document.getElementById("avatar-dialogue");
+//     const dialogueText = document.getElementById("avatar-dialogue-text");
+
+//     dialogueText.textContent = text;
+//     dialogueBox.style.display = "block";
+
+//     // Auto-hide after 5 seconds
+//     setTimeout(() => {
+//         dialogueBox.style.display = "none";
+//     }, 5000);
+// }
 
 
 

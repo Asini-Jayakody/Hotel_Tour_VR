@@ -124,14 +124,6 @@ window.addEventListener('mousemove', (event) => {
 });
 
 
-window.addEventListener('sceneChanged', function(e) {
-  const sceneId = e.detail.id;
-  const sceneName = e.detail.name;
-
-  console.log(`Scene changed to: ${sceneName} (ID: ${sceneId})`);
-});
-
-
 
 const message = document.getElementById('sendBtn').addEventListener('click', sendMessageToAvatar);
 
@@ -178,6 +170,14 @@ function animate() {
 animate();
 
 
+
+
+// window.addEventListener('sceneChanged', function(e) {
+//   const sceneId = e.detail.id;
+//   const sceneName = e.detail.name;
+
+//   console.log(`Scene changed to: ${sceneName} (ID: ${sceneId})`);
+// });
 
 // document.getElementById('sendBtn').addEventListener('click', sendMessageToAvatar);
 // document.getElementById('sendBtn').addEventListener('click', testBackend);

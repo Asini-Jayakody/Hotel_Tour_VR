@@ -840,3 +840,30 @@ body.view-control-buttons .viewControlButton {
   pointer-events: none; /* Allow clicks to pass through */
 }
 
+
+#avatar-dialogue {
+    animation: popin 0.3s ease;
+}
+
+@keyframes popin {
+    from {
+        transform: translateX(-50%) scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+    }
+}
+
+
+/* #avatar-dialogue-text::after {
+    content: "|";
+    animation: blink 1s steps(1) infinite;
+    margin-left: 2px;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+} */
+

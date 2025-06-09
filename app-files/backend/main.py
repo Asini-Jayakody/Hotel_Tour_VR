@@ -10,6 +10,8 @@ from google.genai import types
 from fastapi.responses import StreamingResponse
 from utils import l16_to_wav
 from google.cloud import speech
+from fastapi.responses import JSONResponse
+import base64
 
 app = FastAPI()
 
@@ -59,7 +61,11 @@ async def generate_audio_response(text):
         raw_pcm = response.candidates[0].content.parts[0].inline_data.data
         wav_stream = l16_to_wav(raw_pcm)
 
-        return StreamingResponse(wav_stream, media_type="audio/wav")
+        audio_bytes = wav_stream.read()  
+
+        return audio_bytes
+
+        # return StreamingResponse(wav_stream, media_type="audio/wav")
     
     except Exception as e:
         print(f"Error generating audio response: {e}")
@@ -128,9 +134,15 @@ async def avatar_response_to_speech(request: Request):
         print(f"Generated text response: {text_response}")
 
         # Generate audio response
-        audio_response = await generate_audio_response(text_response)
+        # audio_response = await generate_audio_response(text_response)
+        audio_bytes = await generate_audio_response(text_response)
+        audio_base64 = base64.b64encode(audio_bytes).decode("utf-8")
 
-        return audio_response
+        # return audio_response
+        return JSONResponse({
+            "text_response": text_response,
+            "audio_response": audio_base64
+        })
     
     except HTTPException as e:
         raise e
