@@ -82,6 +82,7 @@
     var limiter = Marzipano.RectilinearView.limit.traditional(data.faceSize, 100*Math.PI/180, 120*Math.PI/180);
     var view = new Marzipano.RectilinearView(data.initialViewParameters, limiter);
 
+
     var scene = viewer.createScene({
       source: source,
       geometry: geometry,
@@ -100,6 +101,8 @@
       var element = createInfoHotspotElement(hotspot);
       scene.hotspotContainer().createHotspot(element, { yaw: hotspot.yaw, pitch: hotspot.pitch });
     });
+
+    // window.panoView = view;
 
     return {
       data: data,
@@ -187,6 +190,7 @@
     stopAutorotate();
     scene.view.setParameters(scene.data.initialViewParameters);
     scene.scene.switchTo();
+    window.panoView = scene.view;
     startAutorotate();
     updateSceneName(scene);
     updateSceneList(scene);
