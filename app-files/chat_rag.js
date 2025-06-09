@@ -148,6 +148,7 @@ export function submitAudio(recordBtnId, stopBtnId){
 
 
 function playAvatarTextAndAudio(fullText, audio, duration) {
+// export function playAvatarTextAndAudio() {
     const dialogueBox = document.getElementById("avatar-dialogue");
     const dialogueText = document.getElementById("avatar-dialogue-text");
 
@@ -169,14 +170,18 @@ function playAvatarTextAndAudio(fullText, audio, duration) {
 
     audio.play();
 
-    // // Hide message after audio ends
-    // audio.onended = () => {
+    // setTimeout(() => {
     //     dialogueBox.style.display = "none";
-    // };
+    // }, 10000);
 
-    setTimeout(() => {
-        dialogueBox.style.display = "none";
-    }, 10000);
+    document.getElementById('close-avatar-dialogue').addEventListener('click', closeAvatarDialogue)
+    document.getElementById('recordBtnId').addEventListener('click', closeAvatarDialogue)
+}
+
+
+
+function closeAvatarDialogue() {
+  document.getElementById('avatar-dialogue').style.display = 'none';
 }
 
 

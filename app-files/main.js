@@ -44,7 +44,7 @@ let action; // For animation control
 loader.load('models/eve_wall-e__eva/scene.gltf', function(gltf) {
   avatar = gltf.scene;
   avatar.scale.set(1, 1, 1); 
-  avatar.position.set(0, -1, 0); 
+  avatar.position.set(4, -3, 0); 
   scene.add(avatar);
 
   // ✅ Set up animation mixer
@@ -126,6 +126,7 @@ window.addEventListener('mousemove', (event) => {
 
 
 const message = document.getElementById('sendBtn').addEventListener('click', sendMessageToAvatar);
+// const message = document.getElementById('sendBtn').addEventListener('click', playAvatarTextAndAudio);
 
 document.getElementById('recordBtnId').addEventListener('click', submitAudio('recordBtnId','stopBtnId'))
 document.getElementById('stopBtnId').addEventListener('click', submitAudio('recordBtnId','stopBtnId'))
@@ -163,8 +164,12 @@ function animate() {
     isTalking = false;
     console.log("stop talking animation");
   }
-  
-  
+
+  if (avatar) {
+    avatar.lookAt(camera.position);
+  }
+
+
   renderer.render(scene, camera);
 }
 animate();
