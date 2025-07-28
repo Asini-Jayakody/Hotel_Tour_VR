@@ -150,7 +150,7 @@ async def avatar_response_to_speech(request: Request):
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1:8080"],  # or ["*"] for all origins (less secure)
+    allow_origins=["http://127.0.0.1:5500"],  # or ["*"] for all origins (less secure)
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
